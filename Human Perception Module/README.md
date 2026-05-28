@@ -32,6 +32,10 @@ Processed frame
    ↓
 Human Detection
    ↓
+Bounding boxes
+   ↓
+Landmarks extraction
+   ↓
 Pose Estimation
    ↓
 Tracking + Smoothing
@@ -41,5 +45,8 @@ Motion Representation Output
 ---
 
 Steps:
+---
 - Video capture: a stable video pipeline that continuously captures camera frames and converts them into NumPy arrays
 - Image preprocessing: (resizing, color conversion, normalization, noise reduction, brightness correction) Takes the raw camera frames and cleans them up for better pose detection
+- Detect and locate humans in the frame
+- Extract skeletal landmarks
