@@ -1,11 +1,13 @@
+import time
 import cv2
-import numpy as np
 
 from camera.camera import Camera
 from preprocessing.preprocessing import preprocessor
+from humanDetection.humanDetector import HumanDetector
 
 camera = Camera()
 preprocessor = preprocessor()
+humanDetector = HumanDetector()
 
 while True:
 
@@ -14,14 +16,25 @@ while True:
     frame=data["frame"]
     fps=data["fps"]
 
+    timestamp_ms = int(time.time() * 1000)
+
     if frame is None:
         break
 
-    processed_frame = preprocessor.pre_process(frame)
+    results = humanDetector.detect_human(
+        frame,
+        timestamp_ms
+    )
 
-    display = (processed_frame * 255).astype(np.uint8)
+    output = humanDetector.draw_landmarks(
+        frame,
+        results
+    )
 
-    cv2.imshow("Processed frame", display)
+    cv2.imshow(
+        "Human Detection",
+        output
+    )
 
     if cv2.waitKey(1)==ord('q'):
         break
