@@ -24,9 +24,11 @@ Converts raw camera input frames into a stable and structured representation of 
 ```
 Camera
    ↓
-Frame Acquisition
+Raw Frame
    ↓
 Image Preprocessing
+   ↓
+Processed frame
    ↓
 Human Detection
    ↓
@@ -38,4 +40,6 @@ Motion Representation Output
 ```
 ---
 
-- a stable video pipeline that continuously captures camera frames and converts them into NumPy arrays
+Steps:
+- Video capture: a stable video pipeline that continuously captures camera frames and converts them into NumPy arrays
+- Image preprocessing: (resizing, color conversion, normalization, noise reduction, brightness correction) Takes the raw camera frames and cleans them up for better pose detection
