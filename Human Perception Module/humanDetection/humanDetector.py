@@ -3,6 +3,7 @@ import cv2
 
 from mediapipe.tasks import python
 from mediapipe.tasks.python import vision
+from humanDetection.landmarks import LANDMARK_NAMES, POSE_CONNECTIONS
 
 class HumanDetector:
 
@@ -69,30 +70,66 @@ class HumanDetector:
 
         return frame
 
-    def extract_landmarks(self, results):
+    def extract_landmarks(
+    self,
+    results,
+    frame_shape
+    ):
 
-        landmark_data = []
+        pose_data = {}
+
+        height,width,_ = frame_shape
 
         if results.pose_landmarks:
 
-            for pose_landmarks in results.pose_landmarks:
+            pose_landmarks = results.pose_landmarks[0]
 
-                current_pose = []
+            for id, landmark in enumerate(
+                pose_landmarks
+            ):
 
-                for id, landmark in enumerate(pose_landmarks):
+                if id not in LANDMARK_NAMES:
+                    continue
 
-                    current_pose.append({
+                if landmark.visibility < 0.5:
+                    continue
 
-                        "id": id,
+                px = int(landmark.x * width)
 
-                        "x": landmark.x,
-                        "y": landmark.y,
-                        "z": landmark.z,
+                py = int(landmark.y * height)
 
-                        "visibility": landmark.visibility
+                pose_data[
+                    LANDMARK_NAMES[id]
+                ] = {
 
-                    })
+                    "x":px,
+                    "y":py,
+                    "z":landmark.z,
 
-                landmark_data.append(current_pose)
+                    "visibility":
+                    landmark.visibility
 
-        return landmark_data
+                }
+
+        return pose_data
+    
+    def draw_connections(self, frame, pose_data):
+        for p1,p2 in POSE_CONNECTIONS:
+
+            if p1 in pose_data and p2 in pose_data:
+
+                x1 = pose_data[p1]["x"]
+                y1 = pose_data[p1]["y"]
+
+                x2 = pose_data[p2]["x"]
+                y2 = pose_data[p2]["y"]
+
+                cv2.line(
+                    frame,
+                    (x1,y1),
+                    (x2,y2),
+                    (255,0,0),
+                    2
+                )
+
+        return frame

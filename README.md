@@ -27,7 +27,7 @@ pip install opencv-python
 pip install mediapipe
 
 ```
-
+---
 This is an ongoing project
 # The vision: A Real-Time Performance Graphics Generation Engine
     A low-latency computer vision system that observes and interprets human movement in creative performances and continuously feeds that data into a procedural graphics engine to create real-time visual effects

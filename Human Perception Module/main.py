@@ -26,9 +26,15 @@ while True:
         timestamp_ms
     )
 
-    output = humanDetector.draw_landmarks(
+
+    pose_data = humanDetector.extract_landmarks(
+        results,
+        frame.shape
+    )
+
+    output = humanDetector.draw_connections(
         frame,
-        results
+        pose_data
     )
 
     cv2.imshow(
