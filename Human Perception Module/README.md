@@ -11,7 +11,7 @@ Converts raw camera input frames into a stable and structured representation of 
 {
     body_skeleton,
     hand_landmarks,
-    face_landmarks (optional),
+    face_landmarks,
     body_orientation,
     tracked_motion_history,
     segmented_human_region
@@ -36,9 +36,13 @@ Bounding boxes
    ↓
 Landmarks extraction
    ↓
-Pose Estimation
+Temporal Tracking
    ↓
-Tracking + Smoothing
+State Prediction
+   ↓
+Correction
+   ↓
+Stable motion representation
    ↓
 Motion Representation Output
 ```
@@ -50,4 +54,15 @@ Steps:
 - Image preprocessing: (resizing, color conversion, normalization, noise reduction, brightness correction) Takes the raw camera frames and cleans them up for better pose detection
 - Detect and locate humans in the frame
 - Extract skeletal landmarks
-- Estimates the pose
+- Draws the skeletal structure
+- Temporal tracking and smoothing using weighted average (used moving average earlier)
+
+---
+
+### Tools used:
+- Python
+- MediaPipe
+
+### Python Libraries:
+- NumPy
+- OpenCV

@@ -133,3 +133,24 @@ class HumanDetector:
                 )
 
         return frame
+
+    def draw_trails(
+        self,
+        frame,
+        history
+    ):
+        for joint in history:
+
+            points = history[joint]
+
+            for point in points:
+
+                cv2.circle(
+                    frame,
+                    point,
+                    2,
+                    (0,0,255),
+                    -1
+                )
+
+        return frame

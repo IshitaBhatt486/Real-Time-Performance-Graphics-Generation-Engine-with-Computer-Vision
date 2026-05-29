@@ -2,6 +2,8 @@
 
 - Detects multiple humans
 - extracts landmarks
+- creates a skeletal structure
+- stable movement
 
 Architecture:
 Camera
@@ -27,6 +29,11 @@ pip install opencv-python
 pip install mediapipe
 
 ```
+---
+
+# Fixed bugs:
+- preserve state and handle detection failure
+
 ---
 This is an ongoing project
 # The vision: A Real-Time Performance Graphics Generation Engine
