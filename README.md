@@ -1,6 +1,5 @@
 # Human Detection and landmark extraction System
 
-- Detects multiple humans
 - extracts landmarks
 - creates a skeletal structure
 - stable movement

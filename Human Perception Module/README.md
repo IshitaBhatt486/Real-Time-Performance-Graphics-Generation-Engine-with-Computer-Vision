@@ -44,7 +44,13 @@ Correction
    ↓
 Stable motion representation
    ↓
-Motion Representation Output
+Identity Tracking
+   ↓
+Persistent Performer Objects
+   ↓
+Rendering
+   ↓
+Display
 ```
 ---
 
@@ -56,6 +62,7 @@ Steps:
 - Extract skeletal landmarks
 - Draws the skeletal structure
 - Temporal tracking and smoothing using weighted average (used moving average earlier)
+- Identity tracking systems
 
 ---
 

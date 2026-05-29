@@ -5,6 +5,8 @@ from mediapipe.tasks import python
 from mediapipe.tasks.python import vision
 from humanDetection.landmarks import LANDMARK_NAMES, POSE_CONNECTIONS
 
+no_of_performers = 5
+
 class HumanDetector:
 
     def __init__(self):
@@ -17,7 +19,7 @@ class HumanDetector:
         options = vision.PoseLandmarkerOptions(
             base_options=base_options,
             running_mode=vision.RunningMode.VIDEO,
-            num_poses=1,
+            num_poses=no_of_performers,
             min_pose_detection_confidence=0.5,
             min_pose_presence_confidence=0.5,
             min_tracking_confidence=0.5
@@ -29,6 +31,8 @@ class HumanDetector:
         )
 
     def detect_human(self, frame, timestamp_ms):
+
+        frame = frame.astype("uint8")
 
         rgb_frame = cv2.cvtColor(
             frame,
@@ -71,47 +75,51 @@ class HumanDetector:
         return frame
 
     def extract_landmarks(
-    self,
-    results,
-    frame_shape
+        self,
+        results,
+        frame_shape
     ):
 
-        pose_data = {}
-
+        people_pose_data = []
         height,width,_ = frame_shape
 
         if results.pose_landmarks:
 
-            pose_landmarks = results.pose_landmarks[0]
+            for pose_landmarks in results.pose_landmarks:
 
-            for id, landmark in enumerate(
-                pose_landmarks
-            ):
+                pose_data = {}
 
-                if id not in LANDMARK_NAMES:
-                    continue
+                for id, landmark in enumerate(
+                    pose_landmarks
+                ):
 
-                if landmark.visibility < 0.5:
-                    continue
+                    if id not in LANDMARK_NAMES:
+                        continue
 
-                px = int(landmark.x * width)
+                    if landmark.visibility < 0.5:
+                        continue
 
-                py = int(landmark.y * height)
+                    px = int(landmark.x * width)
+                    py = int(landmark.y * height)
 
-                pose_data[
-                    LANDMARK_NAMES[id]
-                ] = {
+                    pose_data[
+                        LANDMARK_NAMES[id]
+                    ] = {
 
-                    "x":px,
-                    "y":py,
-                    "z":landmark.z,
+                        "x":px,
+                        "y":py,
+                        "z":landmark.z,
 
-                    "visibility":
-                    landmark.visibility
+                        "visibility":
+                        landmark.visibility
 
-                }
+                    }
 
-        return pose_data
+                people_pose_data.append(
+                    pose_data
+                )
+
+        return people_pose_data
     
     def draw_connections(self, frame, pose_data):
         for p1,p2 in POSE_CONNECTIONS:
