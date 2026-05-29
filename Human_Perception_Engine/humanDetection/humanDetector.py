@@ -13,7 +13,7 @@ class HumanDetector:
 
         # Model Configuration
         base_options = python.BaseOptions(
-            model_asset_path='Human Perception Module\models\pose_landmarker_full.task'
+            model_asset_path='Human_Perception_Engine\models\pose_landmarker_full.task'
         )
 
         options = vision.PoseLandmarkerOptions(
@@ -26,9 +26,7 @@ class HumanDetector:
         )
 
         # Detector Initialization
-        self.detector = vision.PoseLandmarker.create_from_options(
-            options
-        )
+        self.detector = vision.PoseLandmarker.create_from_options(options)
 
     def detect_human(self, frame, timestamp_ms):
 

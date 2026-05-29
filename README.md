@@ -4,20 +4,31 @@
 - creates a skeletal structure
 - stable movement
 
-Architecture:
+---
+
+# Architecture:
+
 Camera
    ↓
 Human Perception Model
    ↓
+Motion Representation Module
+   ↓
 Output
+
+---
 
 ### Tools used:
 - Python
 - MediaPipe
+- DeepLabV3
 
 ### Python Libraries:
 - NumPy
 - OpenCV
+- PyTorch
+
+---
 
 # To run:
 Run the following commands in the terminal:
@@ -26,12 +37,14 @@ Run the following commands in the terminal:
 pip install numpy
 pip install opencv-python
 pip install mediapipe
+pip install torch torchvision
 
 ```
 ---
 
-# Fixed bugs:
+# Key bugs fixed:
 - preserve state and handle detection failure
+- replaced DeepLabV3's ResNet101 with mobileNetV3(Reason: speed)
 
 ---
 This is an ongoing project
@@ -41,3 +54,5 @@ This is an ongoing project
 ##  Features:
     - Allows for multiple performers
     - Produces graphics for performance in real-time based on the performer's movements
+    - reduced latency
+    - parallize operations for increased speed
